@@ -1,31 +1,37 @@
 package client;
-import io.restassured.response.Response;
+
 import static client.Constants.*;
 import static io.restassured.RestAssured.given;
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.notNullValue;
-
 import io.qameta.allure.Step;
+import io.restassured.response.ValidatableResponse;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 
 public class OrderSteps {
 
+    private final RequestSpecification requestSpecification;
+    private final ResponseSpecification responseSpecification;
+
+    public OrderSteps(RequestSpecification requestSpecification, ResponseSpecification responseSpecification) {
+        this.responseSpecification = responseSpecification;
+        this.requestSpecification = requestSpecification;
+    }
+
     @Step("Get orders")
-    public Response getOrders() {
-        return given().relaxedHTTPSValidation()
-                .log().all()
-                .header("Content-type", "application/json")
-                .when()
+    public ValidatableResponse getOrders() {
+        return given()
+                .spec(requestSpecification)
                 .get(CREATE_ORDER)
                 .then()
-                .log()
-                .all()
-                .extract()
-                .response();
+                .spec(responseSpecification);
     }
 
     @Step("getOrders body contains list - status 200, list notNullValue")
-    public void checkOrderListNotNull(Response response) {
-        response.then()
-                .statusCode(200)
+    public void checkOrderListNotNull(ValidatableResponse response) {
+        response
+                .statusCode(SC_OK)
                 .and()
                 .assertThat()
                 .body("orders", notNullValue());

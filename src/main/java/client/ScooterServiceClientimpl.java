@@ -7,7 +7,7 @@ import static client.Constants.*;
 import static io.restassured.RestAssured.given;
 import io.qameta.allure.Step;
 
-public class ScooterServiceClientimpl implements ScooterServiceClient {
+public class ScooterServiceClientimpl {
     private final RequestSpecification requestSpecification;
     private final ResponseSpecification responseSpecification;
 
@@ -17,7 +17,6 @@ public class ScooterServiceClientimpl implements ScooterServiceClient {
     }
 
     @Step("Create courier")
-    @Override
     public ValidatableResponse create(Courier courier) {
         return given()
                 .spec(requestSpecification)
@@ -28,7 +27,6 @@ public class ScooterServiceClientimpl implements ScooterServiceClient {
     }
 
     @Step("Authorization courier")
-    @Override
     public ValidatableResponse login(Credetntials creditantials) {
         return given()
                 .spec(requestSpecification)
@@ -39,7 +37,6 @@ public class ScooterServiceClientimpl implements ScooterServiceClient {
     }
 
     @Step("Delete courier")
-    @Override
     public ValidatableResponse delete(int id) {
         return given()
                 .spec(requestSpecification)
@@ -47,4 +44,5 @@ public class ScooterServiceClientimpl implements ScooterServiceClient {
                 .then()
                 .spec(responseSpecification);
     }
+
 }

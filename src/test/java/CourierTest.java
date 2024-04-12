@@ -6,13 +6,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static client.Constants.*;
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class CourierTest {
 
     private Courier  courier;
 
-    private ScooterServiceClient client;
+    private ScooterServiceClientimpl client;
     private int id;
 
     @Before
@@ -29,7 +30,7 @@ public class CourierTest {
         ValidatableResponse loginResponse = client.login(Credetntials.fromCourier(courier));
         id = loginResponse.extract().path("id");
         ValidatableResponse responseDelete = client.delete(id);
-        responseDelete.assertThat().statusCode(200).and().body("ok", equalTo(true));
+        responseDelete.assertThat().statusCode(SC_OK).and().body("ok", equalTo(true));
     }
 
     @Test
@@ -37,7 +38,7 @@ public class CourierTest {
     public void createCourierSuccessTest() {
         courier = Courier.createRandom();
         ValidatableResponse response = client.create(courier);
-        response.assertThat().statusCode(201).and().body("ok", equalTo(true));
+        response.assertThat().statusCode(SC_CREATED).and().body("ok", equalTo(true));
     }
 
     @Test
@@ -45,7 +46,7 @@ public class CourierTest {
     public void createCourierWithoutPassTest() {
         courier = Courier.createRandomWithoutPass();
         ValidatableResponse response = client.create(courier);
-        response.assertThat().statusCode(400);
+        response.assertThat().statusCode(SC_BAD_REQUEST);
         response.assertThat().body("message", Matchers.equalTo(INSUFFICIENT_DATA_MESSAGE));
     }
 
@@ -54,7 +55,7 @@ public class CourierTest {
     public void createCourierAlreadyUse() {
         courier = new Courier("Vlad28","Qq12345678","Onshapes");
         ValidatableResponse response = client.create(courier);
-        response.assertThat().statusCode(409);
+        response.assertThat().statusCode(SC_CONFLICT);
         response.assertThat().body("message", Matchers.equalTo(LOGIN_ALREADY_USE_MESSAGE));
     }
 

@@ -1,6 +1,8 @@
 package client;
-public class Order {
 
+import lombok.Data;
+@Data
+public class Order {
     private final String firstName;
     private final String lastName;
     private final String address;
@@ -11,23 +13,4 @@ public class Order {
     private final String comment;
     private final String[] color;
 
-    public Order(String firstName,
-                 String lastName,
-                 String address,
-                 int metroStation,
-                 String phone,
-                 int rentTime,
-                 String deliveryDate,
-                 String comment,
-                 String[] color) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.metroStation = metroStation;
-        this.phone = phone;
-        this.rentTime = rentTime;
-        this.deliveryDate = deliveryDate;
-        this.comment = comment;
-        this.color = color;
-    }
 }

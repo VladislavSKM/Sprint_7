@@ -14,7 +14,6 @@ public class Constants {
     public static final String CREATE_ORDER = "/api/v1/orders";
     public static final String INSUFFICIENT_DATA_MESSAGE = "Недостаточно данных для создания учетной записи";
     public static final String LOGIN_ALREADY_USE_MESSAGE = "Этот логин уже используется. Попробуйте другой.";
-
     public static final String CREDETANTIALS_NOT_FOUND_MESSAGE = "Учетная запись не найдена";
     public static final RequestSpecification REQUEST_SPECIFICATION =
             new RequestSpecBuilder()

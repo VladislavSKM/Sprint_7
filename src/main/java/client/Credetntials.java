@@ -1,5 +1,7 @@
 package client;
+import lombok.Data;
 
+@Data
 public class Credetntials {
     private final String login;
     private final String password;
@@ -8,8 +10,4 @@ public class Credetntials {
         return new Credetntials(courier.getLogin(), courier.getPassword());
     }
 
-    public Credetntials(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
 }
